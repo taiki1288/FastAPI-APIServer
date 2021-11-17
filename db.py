@@ -1,29 +1,16 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import Column, Integer, String
 
-
+# SQLiteに接続(SQLiteでtest.dbファイルを開いている)
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
+# SQLAlchemyエンジンの作成。SQLiteでのみ必要。他のデータベースでは必要ない。
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
-# SQLAlchemyエンジンの作成。SQLiteでのみ必要。他のデータベースでは必要ない。
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+# declarative_baseはクラスを返す関数。Baseを継承してDBモデルやクラスを作成する。
 Base = declarative_base()
-
-# Todoテーブルを定義
-class Todo(Base):
-    __tablename__ = "todos"
-
-    id = Column(Integer, primary_key=True)
-    title = Column(String)
-    content = Column(String)
-
-# テーブルを作成
-Base.metadata.create_all(bind=engine)
-
-

@@ -2,10 +2,11 @@ from fastapi import FastAPI
 
 from db import SessionLocal, engine, Base
 from routers import todo
-# from . import models
+# modelsディレクトリのtodo.pyをインポートしてTodoモデルを読み込み
+from models.todo import Todo
 
 # テーブル作成
-# Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -18,4 +19,3 @@ def get_db():
         db.close()
 
 app.include_router(todo.router)
-

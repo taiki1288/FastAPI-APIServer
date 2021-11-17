@@ -18,8 +18,3 @@ class Todo(BaseModel):
 
     class Config:
         orm_mode = True
-
-
-
-
-
